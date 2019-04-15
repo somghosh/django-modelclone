@@ -209,10 +209,12 @@ class ClonableModelAdmin(ModelAdmin):
         context.update(extra_context or {})
 
         return self.render_change_form(request,
-            context,
-            form_url=form_url,
-            change=False
-        )
+                                       context,
+                                       form_url=form_url,
+                                       change=False,
+                                       add=True
+
+                                       )
 
     def tweak_cloned_fields(self, fields):
         """Override this method to tweak a cloned object before displaying its form.
