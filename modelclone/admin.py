@@ -7,8 +7,10 @@ except ImportError:
     from django.contrib.admin.util import unquote
 if VERSION[0] < 4:
     from django.conf.urls import url
+    from django.utils.encoding import force_text
 else:
     from django.urls import re_path as url
+    from django.utils.encoding import force_str
 
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
