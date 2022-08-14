@@ -59,13 +59,13 @@ class ClonableModelAdmin(ModelAdmin):
         if VERSION[0] == 1 and VERSION[1] < 9:
             from django.conf.urls import patterns
             new_urlpatterns = patterns('',
-                re_path(r'^(.+)/clone/$',
+                url(r'^(.+)/clone/$',
                     self.admin_site.admin_view(self.clone_view),
                     name=url_name)
                 )
         else:
             new_urlpatterns = [
-                re_path(r'^(.+)/change/clone/$',
+                url(r'^(.+)/change/clone/$',
                     self.admin_site.admin_view(self.clone_view),
                     name=url_name)
             ]
