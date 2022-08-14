@@ -8,13 +8,14 @@ except ImportError:
 if VERSION[0] < 4:
     from django.conf.urls import url
     from django.utils.encoding import force_text
+    from django.utils.translation import ugettext as _
+    from django.utils.translation import gettext as _
 else:
     from django.urls import re_path as url
     from django.utils.encoding import force_str
+    from django.utils.translation import gettext as _
+    from django.utils.translation import gettext_lazy as lazy
 
-from django.utils.encoding import force_text
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy as lazy
 from django.utils.html import escape
 from django.forms.models import model_to_dict
 from django.forms.formsets import all_valid
@@ -58,13 +59,13 @@ class ClonableModelAdmin(ModelAdmin):
         if VERSION[0] == 1 and VERSION[1] < 9:
             from django.conf.urls import patterns
             new_urlpatterns = patterns('',
-                url(r'^(.+)/clone/$',
+                re_path(r'^(.+)/clone/$',
                     self.admin_site.admin_view(self.clone_view),
                     name=url_name)
                 )
         else:
             new_urlpatterns = [
-                url(r'^(.+)/change/clone/$',
+                re_path(r'^(.+)/change/clone/$',
                     self.admin_site.admin_view(self.clone_view),
                     name=url_name)
             ]
@@ -91,7 +92,7 @@ class ClonableModelAdmin(ModelAdmin):
 
         if original_obj is None:
             raise Http404(_('{name} object with primary key {key} does not exist.'.format(
-                name=force_text(opts.verbose_name),
+                name=force_str(opts.verbose_name),
                 key=repr(escape(object_id))
             )))
 
