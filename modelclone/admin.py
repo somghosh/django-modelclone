@@ -8,13 +8,11 @@ except ImportError:
 if VERSION[0] < 4:
     from django.conf.urls import url
     from django.utils.encoding import force_text
-    from django.utils.translation import ugettext as _
-    from django.utils.translation import gettext as _
+
 else:
     from django.urls import re_path as url
     from django.utils.encoding import force_str
-    from django.utils.translation import gettext as _
-    from django.utils.translation import gettext_lazy as lazy
+
 
 from django.utils.html import escape
 from django.forms.models import model_to_dict
@@ -32,7 +30,7 @@ __all__ = 'ClonableModelAdmin',
 
 class ClonableModelAdmin(ModelAdmin):
 
-    clone_verbose_name = _('Duplicate')
+    clone_verbose_name = 'Duplicate'
     change_form_template = 'modelclone/change_form.html'
 
     def clone_link(self, clonable_model):
@@ -91,10 +89,10 @@ class ClonableModelAdmin(ModelAdmin):
         original_obj = self.get_object(request, unquote(object_id))
 
         if original_obj is None:
-            raise Http404(_('{name} object with primary key {key} does not exist.'.format(
+            raise Http404('{name} object with primary key {key} does not exist.'.format(
                 name=force_str(opts.verbose_name),
                 key=repr(escape(object_id))
-            )))
+            ))
 
         ModelForm = self.get_form(request)
         formsets = []
